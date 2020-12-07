@@ -34,6 +34,9 @@
 #include <Eigen/Core>
 #include <utils/eigen_utils.hpp>
 #include <utils/vlp_common.h>
+// wql begin
+#include <utils/rs_common.h>
+// wql end
 
 namespace licalib {
 namespace IO {
@@ -77,6 +80,9 @@ private:
   double end_time_;
 
   VelodyneCorrection::Ptr p_LidarConvert_;
+  // wql begin
+  RobosenseCorrection::Ptr p_LidarConvert_rs_;
+  // wql end
 
   LidarModelType lidar_model_;
 
@@ -97,8 +103,8 @@ public:
         break;
       // wql begin
       case LidarModelType::RS_128:
-        p_LidarConvert_ = VelodyneCorrection::Ptr(
-                new VelodyneCorrection(VelodyneCorrection::ModelType::RS_128));
+        p_LidarConvert_rs_ = RobosenseCorrection::Ptr(
+                new RobosenseCorrection(RobosenseCorrection::ModelType::RS_128));
         break;
       // wql end
       default:
