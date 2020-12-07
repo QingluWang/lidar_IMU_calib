@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-bag_path="/home/ha/rosbag/li_calib_data"
+bag_path="/home/cxzn/dataset/guanguangche"
 
 outdoor_sync_bag_name=(
-#"Court-01.bag"
+"lidar-imu-calib-2020-11-04-15-18-37.bag"
 #"Court-02.bag"
 #"Court-03.bag"
 #"Court-04.bag"
@@ -11,7 +11,7 @@ outdoor_sync_bag_name=(
 )
 
 indoor_sync_bag_name=(
-"Garage-01.bag"
+#"Garage-01.bag"
 #"Garage-02.bag"
 #"Garage-03.bag"
 #"Garage-04.bag"
@@ -19,7 +19,7 @@ indoor_sync_bag_name=(
 )
 
 imu_topic_name=(
-"/imu1/data_sync"
+"/imu/data"
 #"/imu2/data_sync"
 #"/imu3/data_sync"
 )
