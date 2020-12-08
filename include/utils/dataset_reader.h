@@ -158,7 +158,7 @@ public:
                   m.instantiate<sensor_msgs::PointCloud2>();
           timestamp = scan_msg->header.stamp.toSec();
           // wql begin
-          if(topic == std::string("rslidar_points")){
+          if(topic == std::string("/rslidar_points")){
             p_LidarConvert_rs_->unpack_scan(scan_msg, pointcloud);
           }
           else

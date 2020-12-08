@@ -2,7 +2,7 @@
  * @Description: RS lidar扩展
  * @Author: wql
  * @Date: 2020-12-07 16:42:23
- * @LastEditTime: 2020-12-08 15:39:51
+ * @LastEditTime: 2020-12-08 17:20:11
  * @LastEditors: wql
  */
 #ifndef ROBOSENSE_CORRECTION_HPP
@@ -33,13 +33,14 @@ public:
 
     }
 
-    void unpackScan(const sensor_msgs::PointCloud2::ConstPtr &lidarMsg, TPointCloud &outPointCloud){
+  void unpack_scan(const sensor_msgs::PointCloud2::ConstPtr &lidarMsg,
+                   TPointCloud &outPointCloud) const {
         RsPointCloud rs_pc;
         pcl::fromROSMsg(*lidarMsg,rs_pc); ///
 
         outPointCloud.clear();
-        outPointCloud.header = pcl_conversions::toPCL(lidarMsg); ///
-        outPointCloud.heigth = rs_pc.height;
+        outPointCloud.header = pcl_conversions::toPCL(lidarMsg->header); ///
+        outPointCloud.height = rs_pc.height;
         outPointCloud.width = rs_pc.width;
         outPointCloud.is_dense = false;
         outPointCloud.resize(outPointCloud.height * outPointCloud.width);

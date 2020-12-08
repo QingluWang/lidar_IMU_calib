@@ -51,13 +51,6 @@ struct RsPointXYZIRT
   double timestamp = 0;
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 } EIGEN_ALIGN16;
-POINT_CLOUD_REGISTER_POINT_STRUCT(licalib::RsPointXYZIRT, 
-                                  (float, x, x)
-                                  (float, y, y)
-                                  (float, z, z)
-                                  (uint8_t, intensity, intensity)
-                                  (uint16_t, ring, ring)
-                                  (double, timestamp, timestamp))
 // wql end
 
 inline void downsampleCloud(pcl::PointCloud<pcl::PointXYZI>::Ptr in_cloud,
@@ -77,12 +70,20 @@ POINT_CLOUD_REGISTER_POINT_STRUCT(licalib::PointXYZIT,
                                   (float, z, z)
                                   (float, intensity, intensity)
                                   (double, timestamp, timestamp))
-
+// wql begin
+POINT_CLOUD_REGISTER_POINT_STRUCT(licalib::RsPointXYZIRT, 
+                                  (float, x, x)
+                                  (float, y, y)
+                                  (float, z, z)
+                                  (uint8_t, intensity, intensity)
+                                  (uint16_t, ring, ring)
+                                  (double, timestamp, timestamp))
+// wql end
 typedef licalib::PointXYZIT TPoint;
 typedef pcl::PointCloud<TPoint> TPointCloud;
 // wql begin
-typedef licalib::PointXYZIT RsPoint;
-typedef pcl::PointCloud<TPoint> RsPointCloud;
+typedef licalib::RsPointXYZIRT RsPoint;
+typedef pcl::PointCloud<RsPoint> RsPointCloud;
 // wql end
 
 inline void TPointCloud2VPointCloud(TPointCloud::Ptr input_pc,
