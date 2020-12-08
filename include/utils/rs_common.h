@@ -2,7 +2,7 @@
  * @Description: RS lidar扩展
  * @Author: wql
  * @Date: 2020-12-07 16:42:23
- * @LastEditTime: 2020-12-07 18:07:59
+ * @LastEditTime: 2020-12-08 15:39:51
  * @LastEditors: wql
  */
 #ifndef ROBOSENSE_CORRECTION_HPP
@@ -34,27 +34,27 @@ public:
     }
 
     void unpackScan(const sensor_msgs::PointCloud2::ConstPtr &lidarMsg, TPointCloud &outPointCloud){
-        VPointCloud vpc;
-        pcl::fromROSMsg(*lidarMsg,vpc); ///
+        RsPointCloud rs_pc;
+        pcl::fromROSMsg(*lidarMsg,rs_pc); ///
 
         outPointCloud.clear();
         outPointCloud.header = pcl_conversions::toPCL(lidarMsg); ///
-        outPointCloud.heigth = vpc.height;
-        outPointCloud.width = vpc.width;
+        outPointCloud.heigth = rs_pc.height;
+        outPointCloud.width = rs_pc.width;
         outPointCloud.is_dense = false;
         outPointCloud.resize(outPointCloud.height * outPointCloud.width);
 
         double timeBase = lidarMsg->header.stamp.toSec(); ///
-        int height = vpc.height;
-        int width = vpc.width;
+        int height = rs_pc.height;
+        int width = rs_pc.width;
         for(int h = 0; h < height; h++){
             for(int w = 0; w < width; w++){
                 TPoint tp;
-                tp.x = vpc.at(w,h).x;
-                tp.y = vpc.at(w,h).y;
-                tp.z = vpc.at(w,h).z;
-                tp.intensity = vpc.at(w,h).intensity;
-                tp.timestamp = timeBase;
+                tp.x = rs_pc.at(w,h).x;
+                tp.y = rs_pc.at(w,h).y;
+                tp.z = rs_pc.at(w,h).z;
+                tp.intensity = rs_pc.at(w,h).intensity;
+                tp.timestamp = rs_pc.at(w,h).timestamp;
                 outPointCloud.at(w,h) = tp;
             }
         }
@@ -65,12 +65,6 @@ public:
 private:
     ModelType modelType_;
 
-    void setParameters(ModelType modelType){
-
-        if(modelType == RS128){
-            
-        }
-    }
 };
 
 }
