@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
-bag_path="/home/cxzn/dataset/guanguangche"
+
+bag_path="/home/cxzn/dataset/xiaobengbeng"
 
 outdoor_sync_bag_name=(
-"lidar-imu-calib-2020-11-04-15-18-37.bag"
+"rs128_INS570d_2020-12-08-16-22-50.bag"
 #"Court-02.bag"
 #"Court-03.bag"
 #"Court-04.bag"
@@ -19,7 +20,7 @@ indoor_sync_bag_name=(
 )
 
 imu_topic_name=(
-"/imu/data"
+"/ins_570d_imu"
 #"/imu2/data_sync"
 #"/imu3/data_sync"
 )
@@ -55,7 +56,7 @@ for i in "${!sync_bag_name[@]}"; do
                           bag_start:="${bag_start}" \
                           bag_durr:="${bag_durr}" \
                           scan4map:="${scan4map}" \
-                          lidar_model:="VLP_16" \
+                          lidar_model:="RS_128" \
                           time_offset_padding:="${timeOffsetPadding}"\
                           ndtResolution:="${ndtResolution}" \
                           show_ui:="${show_ui}"
