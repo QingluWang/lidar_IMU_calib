@@ -157,7 +157,13 @@ public:
           sensor_msgs::PointCloud2::ConstPtr scan_msg =
                   m.instantiate<sensor_msgs::PointCloud2>();
           timestamp = scan_msg->header.stamp.toSec();
-          p_LidarConvert_->unpack_scan(scan_msg, pointcloud);
+          // wql begin
+          if(topic == std::string("rslidar_points")){
+            p_LidarConvert_rs_->unpack_scan(scan_msg, pointcloud);
+          }
+          else
+            p_LidarConvert_->unpack_scan(scan_msg, pointcloud);
+          // wql end
         }
 
         data_->scan_data_.emplace_back(pointcloud);
