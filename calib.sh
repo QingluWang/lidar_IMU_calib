@@ -4,7 +4,7 @@
 bag_path="/home/cxzn/dataset/guanguangche"
 
 outdoor_sync_bag_name=(
-"lidar-imu-2020-11-04-15-22-35.bag"
+"lidar-camera-imu-2020-11-04-15-13-41.bag"
 #"Court-01.bag"
 #"Court-02.bag"
 #"Court-03.bag"

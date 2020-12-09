@@ -16,8 +16,8 @@
 
         <param name="topic_imu"         type="string"   value="$(arg topic_imu)" />
         <!-- wql begin -->
-        <param name="topic_lidar"       type="string"   value="/velodyne_points" />
-        <!-- <param name="topic_lidar"       type="string"   value="/velodyne_packets" /> -->
+        <!-- <param name="topic_lidar"       type="string"   value="/velodyne_points" /> -->
+        <param name="topic_lidar"       type="string"   value="/velodyne_packets" />
         <!-- wql end -->
         <param name="LidarModel"        type="string"   value="$(arg lidar_model)" />
         <param name="path_bag"          type="string"   value="$(arg path_bag)" />
