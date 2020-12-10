@@ -100,7 +100,21 @@ bool CalibrHelper::createCacheFolder(const std::string& bag_path) {
   boost::filesystem::create_directory(cache_path_);
   return true;
 }
-
+/**
+ * @description: 初始化
+ * 将IMU的旋转与LiDAR的旋转对齐
+ * 1. 获取IMU的相对旋转
+ *  1.1 论文式(8)，构建最小二乘问题，求出样条控制点q0~qN
+ *  1.2 论文式(5), 拟合出旋转B样条
+ *  1.3 通过拟合的旋转B样条得到两个时间间隔的IMU的相对旋转
+ * 2. 获取LiDAR的相对旋转
+ *  2.1 通过LiDAR里程计得到LiDAR的相对旋转
+ * 3. 把多个不同时刻的值叠加，构建W矩阵，进行svd分解
+ *  3.1 若求得的倒数第二个特征值>0.25，表示已得到一个充分的解，初始化完成
+ *    https://www.zybuluo.com/snuffles/note/1485532 
+ * @param {*}
+ * @return {*}
+ */
 void CalibrHelper::Initialization() {
   if (Start != calib_step_) {
     ROS_WARN("[Initialization] Need status: Start.");
@@ -109,6 +123,8 @@ void CalibrHelper::Initialization() {
   for (const auto& imu_data: dataset_reader_->get_imu_data()) {
     traj_manager_->feedIMUData(imu_data);
   }
+
+  // [1.1][1.2]
   traj_manager_->initialSO3TrajWithGyro();
 
   for(const TPointCloud& raw_scan: dataset_reader_->get_scan_data()) {
@@ -121,6 +137,7 @@ void CalibrHelper::Initialization() {
     if (lidar_odom_->get_odom_data().size() < 30
         || (lidar_odom_->get_odom_data().size() % 10 != 0))
       continue;
+    // [1.3][2.1][3]
     if (rotation_initializer_->EstimateRotation(traj_manager_,
                                                 lidar_odom_->get_odom_data())) {
       Eigen::Quaterniond qItoLidar = rotation_initializer_->getQ_ItoS();
