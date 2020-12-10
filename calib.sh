@@ -4,7 +4,7 @@
 bag_path="/home/cxzn/dataset/xiaobengbeng"
 
 outdoor_sync_bag_name=(
-"rs128_INS570d_2020-12-08-16-22-50.bag"
+"rs128_INS570d_2020-12-09-10-48-49.bag"
 #"Court-02.bag"
 #"Court-03.bag"
 #"Court-04.bag"
@@ -39,7 +39,10 @@ for i in "${!sync_bag_name[@]}"; do
 
     ndtResolution=0.5	# indoor
     if [ $bag_count -lt ${#outdoor_sync_bag_name[*]} ]; then
+        # wql begin
         ndtResolution=1.0 # outdoor
+        # ndtResolution=1.0 # outdoor
+        # wql end
     fi
 
     for j in "${!imu_topic_name[@]}"; do

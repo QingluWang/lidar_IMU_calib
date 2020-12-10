@@ -127,8 +127,11 @@ void CalibrHelper::Initialization() {
     if (lidar_odom_->get_odom_data().size() < 30
         || (lidar_odom_->get_odom_data().size() % 10 != 0))
       continue;
+    // wql begin
+    // std::cout << "1 Debug" << std::endl;
+    // wql end   
     if (rotation_initializer_->EstimateRotation(traj_manager_,
-                                                lidar_odom_->get_odom_data())) {
+                                                lidar_odom_->get_odom_data())) {                                          
       Eigen::Quaterniond qItoLidar = rotation_initializer_->getQ_ItoS();
       traj_manager_->getCalibParamManager()->set_q_LtoI(qItoLidar.conjugate());
 
@@ -151,9 +154,17 @@ void CalibrHelper::DataAssociation() {
   /// set surfel pap
   if (InitializationDone == calib_step_ ) {
     Mapping();
+    // wql begin
+    std::cout << "2-1 Debug" << std::endl;
+    // wql end  
     scan_undistortion_->undistortScanInMap(lidar_odom_->get_odom_data());
-
+    // wql begin
+    std::cout << "2-2 Debug" << std::endl;
+    // wql end  
     surfel_association_->setSurfelMap(lidar_odom_->getNDTPtr(), map_time_);
+    // wql begin
+    std::cout << "2-3 Debug" << std::endl;
+    // wql end  
   } else if (BatchOptimizationDone == calib_step_ || RefineDone == calib_step_) {
     scan_undistortion_->undistortScanInMap();
 
@@ -166,7 +177,9 @@ void CalibrHelper::DataAssociation() {
       ROS_WARN("[DataAssociation] Please follow the step.");
       return;
   }
-
+  // wql begin
+  std::cout << "2-4 Debug" << std::endl;
+  // wql end  
   /// get association
   for (auto const &scan_raw : dataset_reader_->get_scan_data()) {
     auto iter = scan_undistortion_->get_scan_data_in_map().find(
@@ -176,6 +189,7 @@ void CalibrHelper::DataAssociation() {
     }
     surfel_association_->getAssociation(iter->second, scan_raw.makeShared(), 2);
   }
+
   surfel_association_->averageTimeDownSmaple();
   std::cout << "Surfel point number: "
             << surfel_association_->get_surfel_points().size() << std::endl;

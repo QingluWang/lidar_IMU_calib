@@ -69,7 +69,10 @@ void LiDAROdometry::registration(const VPointCloud::Ptr& cur_scan,
                                  Eigen::Matrix4d& pose_out,
                                  VPointCloud::Ptr scan_in_target) {
   VPointCloud::Ptr p_filtered_cloud(new VPointCloud());
+  // wql begin
   downsampleCloud(cur_scan, p_filtered_cloud, 0.5);
+  // downsampleCloud(cur_scan, p_filtered_cloud, 0.5);
+  // wql end
 
   ndt_omp_->setInputSource(p_filtered_cloud);
   ndt_omp_->align(*scan_in_target, pose_predict.cast<float>());
@@ -82,7 +85,10 @@ void LiDAROdometry::updateKeyScan(const VPointCloud::Ptr& cur_scan,
   if (checkKeyScan(odom_data)) {
 
     VPointCloud::Ptr filtered_cloud(new VPointCloud());
-    downsampleCloud(cur_scan, filtered_cloud, 0.1);
+    // wql begin
+    downsampleCloud(cur_scan, filtered_cloud, 0.2);
+    // downsampleCloud(cur_scan, filtered_cloud, 0.1);
+    // wql end
 
     VPointCloud::Ptr scan_in_target(new VPointCloud());
     pcl::transformPointCloud(*filtered_cloud, *scan_in_target, odom_data.pose);

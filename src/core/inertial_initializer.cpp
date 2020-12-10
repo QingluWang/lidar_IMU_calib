@@ -30,7 +30,7 @@ bool InertialInitializer::EstimateRotation(
   int flags = kontiki::trajectories::EvalOrientation;
   std::shared_ptr<kontiki::trajectories::SplitTrajectory> p_traj
           = traj_manager->getTrajectory();
-
+ 
   Eigen::aligned_vector<Eigen::Matrix4d> A_vec;
   for (size_t j = 1; j < odom_data.size(); ++j) {
     size_t i = j - 1;
@@ -70,8 +70,11 @@ bool InertialInitializer::EstimateRotation(
   Eigen::Matrix<double, 4, 1> x = svd.matrixV().col(3);
   Eigen::Quaterniond q_ItoS_est(x);
   Eigen::Vector4d cov = svd.singularValues();
-
-  if (cov(2) > 0.25) {
+  // wql begin
+  std::cout << "cov(2) : " << cov(2) << std::endl;
+  // wql end
+  // 将0.25改为0.16 
+  if (cov(2) > 0.16) {
     q_ItoS_est_ = q_ItoS_est;
     rotaion_initialized_ = true;
     return true;
