@@ -211,7 +211,13 @@ void CalibrHelper::BatchOptimization() {
 
   TicToc timer;
   timer.tic();
+  // wql begin
+  std::cout << "3-1 Debug" << std::endl;
+  // wql end  
   traj_manager_->trajInitFromSurfel(surfel_association_, opt_time_offset_);
+  // wql begin
+  std::cout << "3-2 Debug" << std::endl;
+  // wql end  
 
   calib_step_ = BatchOptimizationDone;
   saveCalibResult(cache_path_ + "/calib_result.csv");
@@ -231,6 +237,7 @@ void CalibrHelper::Refinement() {
     ROS_WARN("[Refinement] Need status: DataAssociationDone.");
     return;
   }
+  
   TicToc timer;
   timer.tic();
 

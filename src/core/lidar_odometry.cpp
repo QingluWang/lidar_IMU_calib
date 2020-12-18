@@ -70,7 +70,7 @@ void LiDAROdometry::registration(const VPointCloud::Ptr& cur_scan,
                                  VPointCloud::Ptr scan_in_target) {
   VPointCloud::Ptr p_filtered_cloud(new VPointCloud());
   // wql begin
-  downsampleCloud(cur_scan, p_filtered_cloud, 0.5);
+  downsampleCloud(cur_scan, p_filtered_cloud, 0.9);
   // downsampleCloud(cur_scan, p_filtered_cloud, 0.5);
   // wql end
 
@@ -86,7 +86,7 @@ void LiDAROdometry::updateKeyScan(const VPointCloud::Ptr& cur_scan,
 
     VPointCloud::Ptr filtered_cloud(new VPointCloud());
     // wql begin
-    downsampleCloud(cur_scan, filtered_cloud, 0.2);
+    downsampleCloud(cur_scan, filtered_cloud, 0.9);
     // downsampleCloud(cur_scan, filtered_cloud, 0.1);
     // wql end
 

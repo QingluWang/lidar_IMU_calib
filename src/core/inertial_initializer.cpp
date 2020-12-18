@@ -73,8 +73,7 @@ bool InertialInitializer::EstimateRotation(
   // wql begin
   std::cout << "cov(2) : " << cov(2) << std::endl;
   // wql end
-  // 将0.25改为0.16 
-  if (cov(2) > 0.16) {
+  if (cov(2) > 0.25) {
     q_ItoS_est_ = q_ItoS_est;
     rotaion_initialized_ = true;
     return true;

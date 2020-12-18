@@ -63,28 +63,56 @@ void TrajectoryManager::initialSO3TrajWithGyro() {
 void TrajectoryManager::trajInitFromSurfel(
         SurfelAssociation::Ptr surfels_association,
         bool opt_time_offset_) {
+  // wql begin
+  std::cout << "3-1-1 Debug" << std::endl;
+  // wql end
   lidar_->set_relative_orientation(calib_param_manager->q_LtoI);
   lidar_->set_relative_position(calib_param_manager->p_LinI);
   lidar_->LockRelativeOrientation(false);
   lidar_->LockRelativePosition(false);
   if (opt_time_offset_ && time_offset_padding_ > 0) {
+    // wql begin
+    std::cout << "3-1-2 Debug" << std::endl;
+    // wql end
     lidar_->LockTimeOffset(false);
     lidar_->set_max_time_offset(time_offset_padding_);
+    // wql begin
+    std::cout << "3-1-3 Debug" << std::endl;
+    // wql end
   }
   else {
     lidar_->LockTimeOffset(true);
+    // wql begin
+    std::cout << "3-1-4 Debug" << std::endl;
+    // wql end
   }
   imu_->LockGyroscopeBias(false);
   imu_->LockAccelerometerBias(false);
-
+  // wql begin
+  std::cout << "3-1-5 Debug" << std::endl;
+  // wql end
   std::shared_ptr<SplitTrajEstimator> estimator_split;
   estimator_split = std::make_shared<SplitTrajEstimator>(traj_);
+  // wql begin
+  std::cout << "3-1-6 Debug" << std::endl;
+  // wql end
 
   // add constraints
+  // wql begin
+  std::cout << "3-1-6-1 Debug" << std::endl;
+  // wql end
   addGyroscopeMeasurements(estimator_split);
+  // wql begin
+  std::cout << "3-1-6-2 Debug" << std::endl;
+  // wql end
   addAccelerometerMeasurement(estimator_split);
+  // wql begin
+  std::cout << "3-1-6-3 Debug" << std::endl;
+  // wql end
   addSurfMeasurement(estimator_split, surfels_association);
-
+  // wql begin
+  std::cout << "3-1-7 Debug" << std::endl;
+  // wql end
   // addCallback(estimator_split);
 
   //printErrorStatistics("Before optimization");
@@ -188,15 +216,26 @@ void TrajectoryManager::addSurfMeasurement(
   for (auto const& v: surfel_association->get_surfel_planes()) {
     closest_point_vec_.push_back(v.Pi);
   }
-
+  // wql begin
+  std::cout << "3-1-6-3-1 Debug" << std::endl;
+  // wql end
   map_time_ = surfel_association->get_maptime();
+  // wql begin
+  std::cout << "3-1-6-3-2 Debug" << std::endl;
+  // wql end
   for (auto const &spoint : surfel_association->get_surfel_points()) {
     double time = spoint.timestamp;
+    // wql begin
+    std::cout << "3-1-6-3-3 Debug-timestamp : " << time << std::endl;
+    // wql end
     size_t plane_id = spoint.plane_id;
 
     auto msp = std::make_shared<SurfMeasurement> (lidar_, spoint.point,
                                                   closest_point_vec_.at(plane_id).data(), time, map_time_, 5.0, weight);
     surfelpoint_list_.push_back(msp);
+    // wql begin
+    std::cout << "3-1-6-3-4 Debug" << std::endl;
+    // wql end
     estimator->template AddMeasurement<SurfMeasurement>(msp);
   }
 }

@@ -2,7 +2,7 @@
  * @Description: RS lidar扩展
  * @Author: wql
  * @Date: 2020-12-07 16:42:23
- * @LastEditTime: 2020-12-09 09:42:15
+ * @LastEditTime: 2020-12-11 09:25:28
  * @LastEditors: wql
  */
 #ifndef ROBOSENSE_CORRECTION_HPP
@@ -42,7 +42,7 @@ public:
         outPointCloud.header = pcl_conversions::toPCL(lidarMsg->header); ///
         outPointCloud.height = rs_pc.height;
         outPointCloud.width = rs_pc.width;
-        outPointCloud.is_dense = rs_pc.is_dense;
+        outPointCloud.is_dense = false;
         outPointCloud.resize(outPointCloud.height * outPointCloud.width);
 
         int height = rs_pc.height;
