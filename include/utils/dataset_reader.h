@@ -161,8 +161,9 @@ public:
           if(topic == std::string("/rslidar_points")){
             p_LidarConvert_rs_->unpack_scan(scan_msg, pointcloud);
           }
-          else
-            p_LidarConvert_->unpack_scan(scan_msg, pointcloud);
+          else{
+            std::cout << "wql print:Can not support this lidar type" << std::endl;
+          }
           // wql end
         }
 

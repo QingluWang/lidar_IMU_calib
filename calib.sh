@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-
-bag_path="/home/cxzn/dataset/xiaobengbeng"
+bag_path="/home/cxzn/dataset/rs128"
 
 outdoor_sync_bag_name=(
-"rs128_INS570d_2020-12-09-10-48-49.bag"
+"calib.bag"
+# "rs128_INS570d_2020-12-09-10-48-49.bag"
 #"Court-02.bag"
 #"Court-03.bag"
 #"Court-04.bag"
@@ -29,6 +29,7 @@ bag_start=1
 bag_durr=30
 scan4map=15
 timeOffsetPadding=0.015
+# timeOffsetPadding=3.15
 
 show_ui=true  #false
 
@@ -41,7 +42,6 @@ for i in "${!sync_bag_name[@]}"; do
     if [ $bag_count -lt ${#outdoor_sync_bag_name[*]} ]; then
         # wql begin
         ndtResolution=1.0 # outdoor
-        # ndtResolution=1.0 # outdoor
         # wql end
     fi
 
